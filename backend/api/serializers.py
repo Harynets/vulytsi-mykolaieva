@@ -13,3 +13,9 @@ class StreetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Street
         fields = "__all__"
+
+
+class StreetNameSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Street
+        fields = ("name",)
