@@ -9,6 +9,23 @@ import ReactDOMServer from "react-dom/server";
 
 function MainMap() {
     const [data, setData] = useState<GeoJSON.FeatureCollection<Geometry, GeoJsonProperties> | null>(null);
+    const [namedAfterPeopleStreets, setNamedAfterPeopleStreets] = useState<Array<string>>([]);
+
+    // fetch array of street names named after persons
+    useEffect(() => {
+        axios
+            .get(`http://127.0.0.1:8000/street_list?format=json`)
+            .then((res) => {
+                setNamedAfterPeopleStreets(
+                    Array.from(res.data, (elem: { name: string }) => {
+                        return elem.name;
+                    })
+                );
+            })
+            .catch((err) => {
+                console.error("Error:", err.response?.status, err.response?.data);
+            });
+    }, []);
 
     useEffect(() => {
         fetch("/export.geojson")
@@ -17,34 +34,39 @@ function MainMap() {
     }, []);
 
     const onEach = (feature: Feature<Geometry>, layer: Layer) => {
-        if (feature.properties && feature.properties.name) {
+        if (feature.properties && feature.properties.name && namedAfterPeopleStreets?.includes(feature.properties?.name)) {
             layer.bindPopup("", { maxWidth: 210 });
-        }
-        layer.on("click", () => {
-            getStreetData(feature.properties?.name).then((res) => {
-                layer.setPopupContent(
-                    ReactDOMServer.renderToStaticMarkup(
-                        <PersonBiographyPopup
-                            personData={{
-                                photo: res?.data.person.photo,
-                                name: res?.data.person.name,
-                                short_biography: res?.data.person.short_biography,
-                            }}
-                            streetName={feature.properties?.name}
-                        />
-                    )
-                );
+
+            layer.on("click", () => {
+                getStreetData(feature.properties?.name).then((res) => {
+                    if (res?.data.person) {
+                        layer.setPopupContent(
+                            ReactDOMServer.renderToStaticMarkup(
+                                <PersonBiographyPopup
+                                    personData={{
+                                        photo: res?.data.person.photo,
+                                        name: res?.data.person.name,
+                                        short_biography: res?.data.person.short_biography,
+                                    }}
+                                    streetName={feature.properties?.name}
+                                />
+                            )
+                        );
+                    }
+                });
             });
-        });
+        }
     };
 
     const styleGeoJson = (feature: any) => {
         if (feature.properties?.water === "river" || feature.properties?.natural === "water") {
             return { color: "#00BFFF", weight: 1 };
+        } else if (namedAfterPeopleStreets?.includes(feature.properties?.name)) {
+            return { color: "#66CDAA", weight: 4.5 };
         } else if (!feature.properties?.name) {
             return { weight: 0 };
         }
-        return { color: "#66CDAA", weight: 4.5 };
+        return { color: "#D8D8D8", weight: 3.5 };
     };
 
     const getStreetData = (streetName: string) => {
