@@ -6,6 +6,7 @@ import { Layer } from "leaflet";
 import axios from "axios";
 import PersonBiographyPopup from "./PersonBiographyPopup";
 import ReactDOMServer from "react-dom/server";
+import PersonStreetPane from "./PersonStreetPane";
 
 function MainMap() {
     const [data, setData] = useState<GeoJSON.FeatureCollection<Geometry, GeoJsonProperties> | null>(null);
@@ -37,6 +38,20 @@ function MainMap() {
         if (feature.properties && feature.properties.name && namedAfterPeopleStreets?.includes(feature.properties?.name)) {
             layer.bindPopup("", { maxWidth: 210 });
 
+            layer.on("mouseover", () => {
+                (layer as any).setStyle({
+                    color: "#00FF7F",
+                    weight: 6,
+                });
+            });
+
+            layer.on("mouseout", () => {
+                (layer as any).setStyle({
+                    color: "#66CDAA",
+                    weight: 4.5,
+                });
+            });
+
             layer.on("click", () => {
                 getStreetData(feature.properties?.name).then((res) => {
                     if (res?.data.person) {
@@ -62,11 +77,11 @@ function MainMap() {
         if (feature.properties?.water === "river" || feature.properties?.natural === "water") {
             return { color: "#00BFFF", weight: 1 };
         } else if (namedAfterPeopleStreets?.includes(feature.properties?.name)) {
-            return { color: "#66CDAA", weight: 4.5 };
+            return { color: "#66CDAA", weight: 4.5, pane: "personStreet" };
         } else if (!feature.properties?.name) {
             return { weight: 0 };
         }
-        return { color: "#D8D8D8", weight: 3.5 };
+        return { color: "#D8D8D8", weight: 3.5, className: "other-street" };
     };
 
     const getStreetData = (streetName: string) => {
@@ -82,7 +97,18 @@ function MainMap() {
 
     return (
         <div className="map-wrapper h-screen w-full">
-            <MapContainer className="h-screen w-full" center={[46.961, 32]} zoom={12.5} maxZoom={19} minZoom={9}>
+            <MapContainer
+                className="h-screen w-full"
+                center={[46.961, 32.015]}
+                zoom={12.5}
+                maxZoom={17}
+                minZoom={12.1}
+                maxBounds={[
+                    [46.78, 31.46],
+                    [47.081, 32.46],
+                ]}
+            >
+                <PersonStreetPane />
                 {data && <GeoJSON data={data} onEachFeature={onEach} style={styleGeoJson} />}
             </MapContainer>
         </div>
