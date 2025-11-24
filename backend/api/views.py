@@ -14,6 +14,12 @@ class StreetList(generics.ListAPIView):
     serializer_class = StreetNameSerializer
 
 
+class PersonRetrieve(generics.RetrieveAPIView):
+    queryset = Person.objects.all()
+    serializer_class = PersonSerializer
+    lookup_field = "name"
+
+
 class PersonList(generics.ListAPIView):
     queryset = Person.objects.all()
     serializer_class = PersonSerializer
