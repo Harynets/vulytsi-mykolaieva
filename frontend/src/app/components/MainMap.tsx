@@ -63,7 +63,6 @@ function MainMap() {
                                         name: res?.data.person.name,
                                         short_biography: res?.data.person.short_biography,
                                     }}
-                                    streetName={feature.properties?.name}
                                 />
                             )
                         );

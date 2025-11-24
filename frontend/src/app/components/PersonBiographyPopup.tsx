@@ -10,16 +10,15 @@ interface PersonData {
 
 interface Props {
     personData: PersonData;
-    streetName: string;
 }
 
-function PersonBiographyPopup({ personData, streetName }: Props) {
+function PersonBiographyPopup({ personData }: Props) {
     return (
         <div>
             <img className="rounded" src={personData.photo}></img>
             <p className="font-bold text-xl m-0">{personData.name}</p>
             <p className="text-justify">{personData.short_biography}</p>
-            <Link href={`street/${streetName}`}>Читати більше</Link>
+            <Link href={`person/${personData.name.replace(/ /g, "_")}`}>Читати більше</Link>
         </div>
     );
 }
