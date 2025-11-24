@@ -1,6 +1,6 @@
 from rest_framework import generics
-from .models import Street
-from .serializers import StreetSerializer, StreetNameSerializer
+from .models import Street, Person
+from .serializers import StreetSerializer, StreetNameSerializer, PersonSerializer
 
 
 class StreetRetrieve(generics.RetrieveAPIView):
@@ -12,3 +12,8 @@ class StreetRetrieve(generics.RetrieveAPIView):
 class StreetList(generics.ListAPIView):
     queryset = Street.objects.all()
     serializer_class = StreetNameSerializer
+
+
+class PersonList(generics.ListAPIView):
+    queryset = Person.objects.all()
+    serializer_class = PersonSerializer
