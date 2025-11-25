@@ -74,7 +74,10 @@ function MainMap() {
 
     const styleGeoJson = (feature: any) => {
         if (feature.properties?.water === "river" || feature.properties?.natural === "water") {
-            return { color: "#00BFFF", weight: 1 };
+            return {
+                color: "#a0e0f7",
+                fillOpacity: 1,
+            };
         } else if (namedAfterPeopleStreets?.includes(feature.properties?.name)) {
             return { color: "#66CDAA", weight: 4.5, pane: "personStreet" };
         } else if (!feature.properties?.name) {
