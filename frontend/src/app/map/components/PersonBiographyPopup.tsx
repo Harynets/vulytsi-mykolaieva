@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-import "./PersonBiographyPopup.css";
+import "../styles/PersonBiographyPopup.css";
 
 interface PersonData {
     photo: string;

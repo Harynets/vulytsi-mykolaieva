@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { GeoJSON, MapContainer } from "react-leaflet";
-import "./MainMap.css";
+import "../styles/MainMap.css";
 import { Feature, GeoJsonProperties, Geometry } from "geojson";
 import { Layer } from "leaflet";
 import axios from "axios";
