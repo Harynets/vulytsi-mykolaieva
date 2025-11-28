@@ -5,6 +5,17 @@ export interface PersonInterface {
     date_of_death: string;
     photo: string;
     quote: string;
+    biography: string;
     short_biography: string;
-    category: string;
+    category:
+        | "military"
+        | "politics"
+        | "science"
+        | "business"
+        | "culture"
+        | "writers"
+        | "sport"
+        | "public"
+        | "religion"
+        | "other";
 }
