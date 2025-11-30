@@ -4,8 +4,13 @@ import { AppBar, Box, Button, Container, IconButton, Menu, MenuItem, Toolbar, Ty
 import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
 import MenuIcon from "@mui/icons-material/Menu";
 import React from "react";
+import Link from "next/link";
 
-const PAGES = ["Мапа", "Біографії", "Вулиці"];
+const PAGES = [
+    { label: "Мапа", link: "/map" },
+    { label: "Біографії", link: "/biographies" },
+    { label: "Вулиці", link: "#" },
+];
 
 function Navbar() {
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
@@ -53,10 +58,12 @@ function Navbar() {
                             onClose={handleCloseNavMenu}
                             sx={{ display: { xs: "block", md: "none" } }}
                         >
-                            {[...PAGES, "Підтримати"].map((page) => (
-                                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                    <Typography sx={{ textAlign: "center" }}>{page}</Typography>
-                                </MenuItem>
+                            {[...PAGES, { label: "Підтримати", link: "#" }].map((page) => (
+                                <Link key={page.label} href={page.link}>
+                                    <MenuItem onClick={handleCloseNavMenu}>
+                                        <Typography sx={{ textAlign: "center" }}>{page.label}</Typography>
+                                    </MenuItem>
+                                </Link>
                             ))}
                         </Menu>
                     </Box>
@@ -76,11 +83,12 @@ function Navbar() {
                     <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }, justifyContent: "center" }}>
                         {PAGES.map((page) => (
                             <Button
-                                key={page}
+                                key={page.label}
                                 onClick={handleCloseNavMenu}
+                                href={page.link}
                                 sx={{ my: 2, mx: 1.5, color: "#676767", display: "block" }}
                             >
-                                <Typography>{page}</Typography>
+                                <Typography>{page.label}</Typography>
                             </Button>
                         ))}
                     </Box>
