@@ -7,6 +7,7 @@ import axios from "axios";
 import PersonBiographyPopup from "./PersonBiographyPopup";
 import ReactDOMServer from "react-dom/server";
 import PersonStreetPane from "./PersonStreetPane";
+import CanvasGeoJsonLayer from "./CanvasGeoJsonLayer";
 
 function MainMap() {
     const [data, setData] = useState<GeoJSON.FeatureCollection<Geometry, GeoJsonProperties> | null>(null);
@@ -36,37 +37,60 @@ function MainMap() {
 
     const onEach = (feature: Feature<Geometry>, layer: Layer) => {
         if (feature.properties && feature.properties.name && namedAfterPeopleStreets?.includes(feature.properties?.name)) {
-            layer.bindPopup("", { maxWidth: 210 });
+            layer.bindPopup(
+                // popup fallback
+                '<div style="height:300px; width:210px; display:flex; justify-content:center; align-items:center;">Завантаження...</div>',
+                { maxWidth: 210, autoPanPadding: [60, 60] }
+            );
 
             layer.on("mouseover", () => {
                 (layer as any).setStyle({
                     color: "#00FF7F",
-                    weight: 6,
+                    weight: 7.5,
                 });
             });
 
             layer.on("mouseout", () => {
                 (layer as any).setStyle({
                     color: "#66CDAA",
-                    weight: 4.5,
+                    weight: 5,
                 });
             });
 
-            layer.on("click", () => {
+            layer.on("popupopen", (event) => {
                 getStreetData(feature.properties?.name).then((res) => {
-                    if (res?.data.person) {
-                        layer.setPopupContent(
-                            ReactDOMServer.renderToStaticMarkup(
-                                <PersonBiographyPopup
-                                    personData={{
-                                        photo: res?.data.person.photo,
-                                        name: res?.data.person.name,
-                                        short_biography: res?.data.person.short_biography,
-                                    }}
-                                />
-                            )
-                        );
-                    }
+                    if (!res?.data?.person) return;
+                    layer.setPopupContent(
+                        ReactDOMServer.renderToStaticMarkup(
+                            <PersonBiographyPopup
+                                personData={{
+                                    photo: res.data.person.photo,
+                                    name: res.data.person.name,
+                                    short_biography: res.data.person.short_biography,
+                                }}
+                            />
+                        )
+                    );
+
+                    // center popup
+                    const popup = layer.getPopup();
+
+                    const map = (event.target as any)._map;
+                    if (!map) return;
+
+                    const popupHeight = (popup as any)._container?.offsetHeight || 0;
+                    const latlng = popup?.getLatLng();
+                    if (!latlng) return;
+
+                    const point = map.latLngToContainerPoint(latlng);
+                    point.y -= popupHeight / 2;
+                    const newLatLng = map.containerPointToLatLng(point);
+
+                    map.panTo(newLatLng, {
+                        animate: true,
+                        duration: 0.9,
+                        easeLinearity: 0.85,
+                    });
                 });
             });
         }
@@ -79,7 +103,7 @@ function MainMap() {
                 fillOpacity: 1,
             };
         } else if (namedAfterPeopleStreets?.includes(feature.properties?.name)) {
-            return { color: "#66CDAA", weight: 4.5, pane: "personStreet" };
+            return { color: "#66CDAA", weight: 5, pane: "personStreet" };
         } else if (!feature.properties?.name) {
             return { weight: 0 };
         }
@@ -98,22 +122,21 @@ function MainMap() {
     };
 
     return (
-        <div className="map-wrapper h-screen w-full">
-            <MapContainer
-                className="h-screen w-full"
-                center={[46.961, 32.015]}
-                zoom={12.5}
-                maxZoom={17}
-                minZoom={12.1}
-                maxBounds={[
-                    [46.78, 31.46],
-                    [47.081, 32.46],
-                ]}
-            >
-                <PersonStreetPane />
-                {data && <GeoJSON data={data} onEachFeature={onEach} style={styleGeoJson} />}
-            </MapContainer>
-        </div>
+        <MapContainer
+            className="h-screen w-full"
+            center={[46.961, 32.015]}
+            zoom={12.5}
+            maxZoom={17}
+            minZoom={12.35}
+            maxBounds={[
+                [46.78, 31.46],
+                [47.081, 32.46],
+            ]}
+        >
+            <PersonStreetPane />
+            {data && <GeoJSON data={data} onEachFeature={onEach} style={styleGeoJson} />}
+            {data && <CanvasGeoJsonLayer data={data} onEachFeature={onEach} style={styleGeoJson} />}
+        </MapContainer>
     );
 }
 
