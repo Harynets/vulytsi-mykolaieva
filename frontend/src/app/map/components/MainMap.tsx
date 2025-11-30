@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { GeoJSON, MapContainer } from "react-leaflet";
-import "../styles/MainMap.css";
+import styles from "../styles/MainMap.module.css";
 import { Feature, GeoJsonProperties, Geometry } from "geojson";
 import { Layer } from "leaflet";
 import axios from "axios";
@@ -98,16 +98,13 @@ function MainMap() {
 
     const styleGeoJson = (feature: any) => {
         if (feature.properties?.water === "river" || feature.properties?.natural === "water") {
-            return {
-                color: "#a0e0f7",
-                fillOpacity: 1,
-            };
+            return { color: "#a0e0f7", fillOpacity: 1, className: styles["grab-surface"] };
         } else if (namedAfterPeopleStreets?.includes(feature.properties?.name)) {
             return { color: "#66CDAA", weight: 5, pane: "personStreet" };
         } else if (!feature.properties?.name) {
             return { weight: 0 };
         }
-        return { color: "#D8D8D8", weight: 3.5, className: "other-street" };
+        return { color: "#D8D8D8", weight: 3.5, className: styles["grab-surface"] };
     };
 
     const getStreetData = (streetName: string) => {
