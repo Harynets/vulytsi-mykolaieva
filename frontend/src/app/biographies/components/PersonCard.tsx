@@ -1,13 +1,9 @@
+import { PersonCardProps } from "@/app/types/PersonCardProps";
 import { Avatar, Box, Typography } from "@mui/material";
 import Link from "next/link";
 import React from "react";
 
-interface Props {
-    name: string;
-    photo: string;
-}
-
-function PersonCard({ name, photo }: Props) {
+function PersonCard({ name, photo }: PersonCardProps) {
     return (
         <Box
             sx={{

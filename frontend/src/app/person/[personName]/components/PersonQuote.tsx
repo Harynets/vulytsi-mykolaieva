@@ -1,12 +1,8 @@
+import { PersonQuoteProps } from "@/app/types/PersonQuoteProps";
 import { Box, Typography } from "@mui/material";
 import React from "react";
 
-interface Props {
-    name: string;
-    quote: string;
-}
-
-function PersonQuote({ name, quote }: Props) {
+function PersonQuote({ name, quote }: PersonQuoteProps) {
     return (
         <Box sx={{ marginY: "38px" }}>
             <Typography

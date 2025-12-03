@@ -1,16 +1,11 @@
 "use client";
 import { useEffect } from "react";
 import { useMap } from "react-leaflet";
-import L, { GeoJSON, Layer } from "leaflet";
-
-interface Props {
-    data: any;
-    onEachFeature?: (feature: any, layer: Layer) => void;
-    style?: (feature: any) => any;
-}
+import L, { GeoJSON } from "leaflet";
+import { CanvasGeoJsonLayerProps } from "@/app/types/CanvasGeoJsonLayerProps";
 
 // set padding for the map
-export default function CanvasGeoJsonLayer({ data, onEachFeature, style }: Props) {
+export default function CanvasGeoJsonLayer({ data, onEachFeature, style }: CanvasGeoJsonLayerProps) {
     const map = useMap();
 
     useEffect(() => {

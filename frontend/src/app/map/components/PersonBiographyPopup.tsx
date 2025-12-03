@@ -1,17 +1,8 @@
+import { PersonBiographyPopupProps } from "@/app/types/PersonBiographyPopupProps";
 import Link from "next/link";
 import React from "react";
 
-interface PersonData {
-    photo: string;
-    name: string;
-    short_biography: string;
-}
-
-interface Props {
-    personData: PersonData;
-}
-
-function PersonBiographyPopup({ personData }: Props) {
+function PersonBiographyPopup({ personData }: PersonBiographyPopupProps) {
     return (
         <div>
             <img className="rounded" src={personData.photo}></img>

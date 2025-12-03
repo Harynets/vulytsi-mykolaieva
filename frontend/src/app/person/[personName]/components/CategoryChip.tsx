@@ -10,22 +10,9 @@ import GroupsIcon from "@mui/icons-material/Groups";
 import ChurchIcon from "@mui/icons-material/Church";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import React from "react";
+import { CategoryChipProps } from "@/app/types/CategoryChipProps";
 
-interface Props {
-    category:
-        | "military"
-        | "politics"
-        | "science"
-        | "business"
-        | "culture"
-        | "writers"
-        | "sport"
-        | "public"
-        | "religion"
-        | "other";
-}
-
-function CategoryChip({ category }: Props) {
+function CategoryChip({ category }: CategoryChipProps) {
     const labelAndIcon = {
         military: { label: "Військова справа", icon: <MilitaryTechIcon /> },
         politics: { label: "Політика", icon: <GavelIcon /> },

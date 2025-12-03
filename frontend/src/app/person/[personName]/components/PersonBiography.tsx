@@ -1,11 +1,8 @@
+import { PersonBiographyProps } from "@/app/types/PersonBiographyProps";
 import { Box, Typography } from "@mui/material";
 import React from "react";
 
-interface Props {
-    biography: string;
-}
-
-function PersonBiography({ biography }: Props) {
+function PersonBiography({ biography }: PersonBiographyProps) {
     return (
         <>
             <Typography sx={{ fontWeight: "bold", marginBottom: "8px" }} variant="h5">

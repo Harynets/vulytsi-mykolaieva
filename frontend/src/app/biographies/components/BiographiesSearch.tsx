@@ -1,13 +1,8 @@
-import { PersonInterface } from "@/app/types/PersonInterface";
+import { BiographiesSearchProps } from "@/app/types/BiographiesSearchProps";
 import { Autocomplete, Box, TextField } from "@mui/material";
 import React from "react";
 
-interface Props {
-    personArr: PersonInterface[];
-    setFilteredOptions: React.Dispatch<React.SetStateAction<string[]>>;
-}
-
-function BiographiesSearch({ personArr, setFilteredOptions }: Props) {
+function BiographiesSearch({ personArr, setFilteredOptions }: BiographiesSearchProps) {
     // called every time user types something in the search input
     const handleInputChange = (event: React.SyntheticEvent, value: string) => {
         const filtered = personArr.map((p) => p.name).filter((name) => name.toLowerCase().includes(value.toLowerCase()));
