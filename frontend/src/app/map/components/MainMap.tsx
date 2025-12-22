@@ -37,7 +37,7 @@ function MainMap() {
 
     const onEach = (feature: Feature<Geometry>, layer: Layer) => {
         if (feature.properties && feature.properties.name && namedAfterPeopleStreets?.includes(feature.properties?.name)) {
-            layer.bindPopup(
+            layer.bindTooltip(feature.properties.name).bindPopup(
                 // popup fallback
                 '<div style="height:300px; width:210px; display:flex; justify-content:center; align-items:center;">Завантаження...</div>',
                 { maxWidth: 210, autoPanPadding: [60, 60] }
