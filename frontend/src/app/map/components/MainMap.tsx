@@ -178,6 +178,7 @@ function MainMap() {
                     [46.78, 31.46],
                     [47.081, 32.46],
                 ]}
+                zoomControl={false}
             >
                 <PersonStreetPane />
                 {data && <GeoJSON data={data} onEachFeature={onEach} style={styleGeoJson} />}
