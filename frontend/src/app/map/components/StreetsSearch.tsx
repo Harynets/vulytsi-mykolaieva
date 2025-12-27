@@ -11,11 +11,11 @@ function StreetsSearch({ allStreets, addMarkerOnMap }: StreetsSearchProps) {
             getOptionLabel={(option) => option.name}
             noOptionsText="Вулицю не знайдено"
             sx={{
-                width: 500,
+                width: { xs: "95%", sm: "54%", md: "40%", lg: "30%", xl: "25%" },
                 position: "fixed",
                 zIndex: 500,
-                top: 15,
-                left: 65,
+                top: 18,
+                left: { xs: "2.5%", sm: "1.5%" },
                 backgroundColor: "white",
                 borderRadius: "4px",
             }}
