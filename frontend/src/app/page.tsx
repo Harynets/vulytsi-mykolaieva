@@ -5,6 +5,7 @@ import { Box, Typography } from "@mui/material";
 import Hero from "./components/Hero";
 import Statistics from "./components/Statistics";
 import ShortBiographyCards from "./components/ShortBiographyCards";
+import CategoryCards from "./components/CategoryCards";
 
 export default function MainPage() {
     return (
@@ -15,11 +16,11 @@ export default function MainPage() {
             <Box sx={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center", marginY: "16px" }}>
                 <Box sx={{ width: { md: "80%", xs: "93%" } }}>
                     <Statistics />
+                    <CategoryCards />
 
                     <Typography variant="h4" gutterBottom>
                         А ви знали, що в Миколаєві є
                     </Typography>
-
                     <ShortBiographyCards />
                 </Box>
             </Box>
