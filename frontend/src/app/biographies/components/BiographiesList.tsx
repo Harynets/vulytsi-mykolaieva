@@ -1,10 +1,12 @@
-import { PersonInterface } from "@/app/types/PersonInterface";
 import { Box } from "@mui/material";
 import React from "react";
 import PersonCard from "./PersonCard";
 import { BiographiesListProps } from "@/app/types/BiographiesListProps";
 
 function BiographiesList({ filteredOptions, personArr }: BiographiesListProps) {
+    if (filteredOptions.length < 0) {
+        return;
+    }
     return (
         <Box sx={{ display: "flex", flexWrap: "wrap" }}>
             {filteredOptions.map((personName) => {
