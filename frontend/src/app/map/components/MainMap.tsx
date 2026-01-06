@@ -13,6 +13,7 @@ import PersonStreetPane from "./PersonStreetPane";
 import CanvasGeoJsonLayer from "./CanvasGeoJsonLayer";
 import StreetsSearch from "./StreetsSearch";
 import { Street } from "@/app/types/Street";
+import MapDrawer from "./MapDrawer";
 
 function MainMap() {
     const [data, setData] = useState<GeoJSON.FeatureCollection<Geometry, GeoJsonProperties> | null>(null);
@@ -167,6 +168,7 @@ function MainMap() {
     return (
         <>
             <StreetsSearch allStreets={allStreets} addMarkerOnMap={addMarkerOnMap} />
+            <MapDrawer />
             <MapContainer
                 ref={mapRef}
                 className="h-screen w-full"
