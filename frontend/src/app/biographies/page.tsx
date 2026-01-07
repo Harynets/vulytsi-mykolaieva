@@ -20,6 +20,7 @@ function Biographies() {
     const [page, setPage] = useState(Number(params.get("page")) || 1);
     const [personArr, setPersonArr] = useState<PersonInterface[]>([]);
     const [filteredOptions, setFilteredOptions] = useState<string[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     // fetch array of all persons
     useEffect(() => {
@@ -27,6 +28,7 @@ function Biographies() {
             .get(`http://127.0.0.1:8000/person_list?format=json`)
             .then((res) => {
                 setPersonArr(res.data);
+                setIsLoading(false);
                 // add all person cards to the main page when no query
                 if (!params.get("query")) {
                     setFilteredOptions(res.data.map((person: PersonInterface) => person.name));
@@ -73,6 +75,7 @@ function Biographies() {
                             (page - 1) * CARDS_PER_PAGE + CARDS_PER_PAGE
                         )}
                         personArr={personArr}
+                        isLoading={isLoading}
                     />
                 </Box>
                 {filteredOptions.length / CARDS_PER_PAGE > 1 ? (
