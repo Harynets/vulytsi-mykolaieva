@@ -1,9 +1,21 @@
-import { ReadonlyURLSearchParams } from "next/navigation";
 import { PersonInterface } from "./PersonInterface";
 
 export interface BiographiesSearchProps {
+    searchValue: string;
+    setSearchValue: React.Dispatch<React.SetStateAction<string>>;
+    updateURL: (newSearch: string | null, newCategories?: string[] | string | null) => void;
     personArr: PersonInterface[];
-    setFilteredOptions: React.Dispatch<React.SetStateAction<string[]>>;
-    params: ReadonlyURLSearchParams;
-    setPage: React.Dispatch<React.SetStateAction<number>>;
+    selectedCategories: string[];
+    categories: {
+        military: string;
+        politics: string;
+        science: string;
+        business: string;
+        culture: string;
+        writers: string;
+        sport: string;
+        public: string;
+        religion: string;
+        other: string;
+    };
 }

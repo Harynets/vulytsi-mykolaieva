@@ -29,11 +29,11 @@ function BiographiesList({ filteredOptions, personArr, isLoading }: BiographiesL
     if (filteredOptions.length === 0) {
         return (
             <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                <Typography variant="h5" sx={{ textAlign: "center" }}>
+                <Typography variant="h5" sx={{ textAlign: "center", marginTop: "18px" }}>
                     За Вашим запитом нічого не знайдено.
                 </Typography>
                 <Typography variant="h6" sx={{ textAlign: "center" }}>
-                    Можливо Ви ввели некоректний запит. Перевірте правильність написання ключових слів.
+                    Можливо Ви ввели некоректний запит. Перевірте правильність написання імені. Перевірте фільтри.
                 </Typography>
             </Box>
         );
