@@ -23,3 +23,10 @@ class PersonRetrieve(generics.RetrieveAPIView):
 class PersonList(generics.ListAPIView):
     queryset = Person.objects.all()
     serializer_class = PersonSerializer
+
+
+class PersonRandomList(generics.ListAPIView):
+    serializer_class = PersonSerializer
+
+    def get_queryset(self):
+        return Person.objects.all().order_by("?")[:self.kwargs["number"]]

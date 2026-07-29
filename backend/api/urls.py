@@ -4,6 +4,7 @@ from django.urls import path
 urlpatterns=[
     path("street/<str:name>", views.StreetRetrieve.as_view(), name="street_retrieve"),
     path("street_list/", views.StreetList.as_view(), name="street_list"),
-    path("person/<str:name>", views.PersonRetrieve.as_view(), name="person_retrieve"),
-    path("person_list/", views.PersonList.as_view(), name="person_list")
+    path("person/<str:name>/", views.PersonRetrieve.as_view(), name="person_retrieve"),
+    path("person_list/", views.PersonList.as_view(), name="person_list"),
+    path("person_random_list/<int:number>/", views.PersonRandomList.as_view(), name="person_random_list")
 ]
