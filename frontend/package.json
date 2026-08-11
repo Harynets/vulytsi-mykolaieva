@@ -16,6 +16,8 @@
     "@mui/material": "^7.3.5",
     "@mui/material-nextjs": "^7.3.5",
     "axios": "^1.12.2",
+    "embla-carousel-auto-scroll": "^8.6.0",
+    "embla-carousel-react": "^8.6.0",
     "leaflet": "^1.9.4",
     "next": "15.5.3",
     "react": "^19.0.0-rc.1",

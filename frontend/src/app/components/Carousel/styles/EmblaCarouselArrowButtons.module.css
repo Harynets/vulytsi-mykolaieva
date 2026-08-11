@@ -1,0 +1,53 @@
+.embla__button {
+    -webkit-tap-highlight-color: rgba(var(--text-high-contrast-rgb-value), 0.5);
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: transparent;
+    touch-action: manipulation;
+    display: inline-flex;
+    text-decoration: none;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    border: 0.2rem solid var(--detail-medium-contrast);
+    width: 3.6rem;
+    height: 3.6rem;
+
+    border-radius: 50%;
+    color: var(--text-body);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: rotate(0deg);
+}
+
+.embla__button__svg {
+    width: 60%;
+    height: 60%;
+}
+
+.button_container {
+    margin: 5px;
+    z-index: 10;
+}
+
+.button_container:hover {
+    background-color: rgba(55, 54, 54, 0.1);
+    border-radius: 12px;
+}
+
+.button_container:has(.embla__button--prev) {
+    position: absolute;
+    left: 3;
+}
+
+.button_container:has(.embla__button--next) {
+    position: absolute;
+    right: 3;
+}
+
+@media (max-width: 1000px) {
+    .button_container {
+        display: none;
+    }
+}
